@@ -1,19 +1,79 @@
-#Get the data from all turbines.
+#Turbine Farm server application
+#Use https://turbine-farm.run.aws-usw02-pr.ice.predix.io/api/turbines/:turbine_id/sensors/:sensor_id
 import requests
-from flask import Flask
+import json
+from flask import Flask, url_for, redirect
 
-#create the application instance
+#Create the application instance
 app = Flask(__name__)
 
-@app.route("/reutrncurrentdata")
-def getCurrentData():
-	#Use https://turbine-farm.run.aws-usw02-pr.ice.predix.io/api/turbines/:turbine_id/sensors/:sensor_id
-	turbine1_temp = requests.get("https://turbine-farm.run.aws-usw02-pr.ice.predix.io/api/turbines/1/sensors/temperature")
-	turbine1_volt = requests.get("https://turbine-farm.run.aws-usw02-pr.ice.predix.io/api/turbines/1/sensors/voltage")
-	turbine2_temp = requests.get("https://turbine-farm.run.aws-usw02-pr.ice.predix.io/api/turbines/2/sensors/temperature")
-	turbine2_volt = requests.get("https://turbine-farm.run.aws-usw02-pr.ice.predix.io/api/turbines/2/sensors/voltage")
-	turbine3_temp = requests.get("https://turbine-farm.run.aws-usw02-pr.ice.predix.io/api/turbines/3/sensors/temperature")
-	turbine3_volt = requests.get("https://turbine-farm.run.aws-usw02-pr.ice.predix.io/api/turbines/3/sensors/voltage")
+#Return index route
+@app.route("/")
+def index():
+	return redirect(url_for('static', filename='index.html'))
 
-	data = '{' + turbine1_temp.content + turbine1_volt.content + turbine2_temp.content + turbine2_volt.content + turbine3_temp.content + turbine3_volt.content + '}'
+#Return all turbine data as a json
+@app.route("/getAllData")
+def getCurrentData():
+	#Create list
+	data = list()
+	for i in range(1, 4):
+		data.append(getTurbineData(i))
+
+	alerts = list()
+	alerts.append({"alert":"This is an alert"})
+
+	dict_data = {"turbines":data, "alerts":alerts}
+	return json.dumps(dict_data)
+
+#Return one turbine's data as a json
+@app.route("/getTurbineData/<id>/")
+def getTurbineDataString(id):
+	return json.dumps(getTurbineData(id))
+
+#Return one turbine's data
+def getTurbineData(id):
+	#Get data
+	turbine_temp = requests.get("https://turbine-farm.run.aws-usw02-pr.ice.predix.io/api/turbines/" + str(id) + "/sensors/temperature")
+	turbine_volt = requests.get("https://turbine-farm.run.aws-usw02-pr.ice.predix.io/api/turbines/" + str(id) + "/sensors/voltage")
+	turbine_stat = requests.get("https://turbine-farm.run.aws-usw02-pr.ice.predix.io/api/turbines/" + str(id) + "/heartbeat")
+	data = dict()
+
+	#Populate Dictionary
+	data["id"] = str(id)
+
+	#Temp json is real
+	if json.loads(turbine_temp.text) == None:
+		data["timestamp"] = "null"
+		data["temp"] = "null"
+	else:
+		data["timestamp"] = json.loads(turbine_temp.text)['timestamp']
+		data["temp"] = json.loads(turbine_temp.text)['value']
+
+	#Volt json is real
+	if json.loads(turbine_volt.text) == None:
+		data["voltage"] = "null"
+	else:
+		data["voltage"] = json.loads(turbine_volt.text)['value']
+
+	#Status json is real
+	if json.loads(turbine_stat.text) == None:
+		data["status"] = "null"
+	else:
+		data["status"] = json.loads(turbine_stat.text)['status']
+
+	#Add color
+	if data["status"] == "ONLINE":
+		data["color"] = "success"
+	else:
+		data["color"] = "danger"
+
 	return data
+
+#Get the data in a list instead of JSON
+# def getDataList():
+# 	data = ()
+# 	for i in range(1, 4):
+# 		data.add(requests.get("https://turbine-farm.run.aws-usw02-pr.ice.predix.io/api/turbines/" + str(i) + "/sensors/temperature"))
+# 		data.add(requests.get("https://turbine-farm.run.aws-usw02-pr.ice.predix.io/api/turbines/" + str(i) + "/sensors/voltage"))
+# 	return data
