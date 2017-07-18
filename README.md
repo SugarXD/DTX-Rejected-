@@ -1,14 +1,5 @@
 # DTX-Rejected-Turbine-Farm-App
 
-<<<<<<< HEAD
-# Flask data server
-
-To run the flask data server, be sure python is installed and also flask and requests python modules.
-In the man folder, execute 
-
-`export FLASK_APP=app.py
- flask run`
-=======
 ## Running the Server
 
 ### Running the Server Locally
@@ -60,4 +51,3 @@ Use pip to install dependencies. The command `pip install [module]` will auto-in
 `apscheduler`
 
 ## [See Wiki]()_
->>>>>>> fed7f9ff585bd0e3bde1499878d25ce36cadbfa5
