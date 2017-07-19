@@ -1,8 +1,9 @@
 #Turbine Farm server application
 #Use https://turbine-farm.run.aws-usw02-pr.ice.predix.io/api/turbines/:turbine_id/sensors/:sensor_id
-import requests
-import json
+import requests, json, emailalerts, atexit
 from flask import Flask, url_for, redirect
+from apscheduler.schedulers.background import BackgroundScheduler
+from apscheduler.triggers.interval import IntervalTrigger
 
 #Create the application instance
 app = Flask(__name__)
@@ -70,10 +71,18 @@ def getTurbineData(id):
 
 	return data
 
-#Get the data in a list instead of JSON
-# def getDataList():
-# 	data = ()
-# 	for i in range(1, 4):
-# 		data.add(requests.get("https://turbine-farm.run.aws-usw02-pr.ice.predix.io/api/turbines/" + str(i) + "/sensors/temperature"))
-# 		data.add(requests.get("https://turbine-farm.run.aws-usw02-pr.ice.predix.io/api/turbines/" + str(i) + "/sensors/voltage"))
-# 	return data
+
+#Scheduling background data monitor
+def check_data():
+    print "data"
+
+scheduler = BackgroundScheduler()
+scheduler.start()
+scheduler.add_job(
+    func=check_data,
+    trigger=IntervalTrigger(seconds=5),
+    id='printing_job',
+    name='Print date and time every five seconds',
+    replace_existing=True)
+# Shut down the scheduler when exiting the app
+atexit.register(lambda: scheduler.shutdown())

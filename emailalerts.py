@@ -1,6 +1,6 @@
 import smtplib
 
-def send_email(flag, turbine_id):
+def send_email(flag, turbine_id, recipient):
 	server = smtplib.SMTP('smtp.gmail.com', 587)
 	server.starttls()
 	server.login("jareddummyacct@gmail.com", "dummy123")
@@ -11,5 +11,5 @@ def send_email(flag, turbine_id):
 	elif flag == 3:
 		msg = "ALERT - THE TURBINE:"+str(turbine_id)+"OPERATING IN AN ENVIROMENT RATED TOO HOT FOR CONTINOUS OPERATION!\n"
 
-	server.sendmail("jareddummyacct@gmail.com", "williamalex.ross@ge.com", msg)
+	server.sendmail("jareddummyacct@gmail.com", recipient, msg)
 	server.quit()
