@@ -2,16 +2,22 @@
 #Use https://turbine-farm.run.aws-usw02-pr.ice.predix.io/api/turbines/:turbine_id/sensors/:sensor_id
 import requests
 import json
-from flask import Flask, url_for, redirect
+import os
+from flask import Flask, url_for, redirect, render_template
 
 #Create the application instance
 app = Flask(__name__)
+port = int(os.getenv('PORT', 8080))
 
 #Return index route
 @app.route("/")
+#def home():
+#	return render_template('index.html')
 def index():
 	return redirect(url_for('static', filename='index.html'))
 
+if __name__ == '__main__':
+	app.run(host='0.0.0.0', port=port, debug=True)
 #Return all turbine data as a json
 @app.route("/getAllData")
 def getCurrentData():
