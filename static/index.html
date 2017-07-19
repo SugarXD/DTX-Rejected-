@@ -39,10 +39,69 @@
 
   </head>
   <body>
+  
     <div class="container-fluid">
-
+	
       <div id="form"></div>
-
+	<div class="row">
+		  <div class="col-md-12">
+	<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Voltage Guage Readings</h3>
+  </div>
+  <div class="panel-body" style="text-align:center">
+  
+<div class="row" style="text-align:center;" id="vguages">
+	  <div class="col-md-4">
+	  <b>Turbine 1</b>
+<div id="v1chart"></div>
+</div>
+	  <div class="col-md-4">
+	  	  <b>Turbine 2</b>
+<div id="v2chart"></div>
+</div>
+	  <div class="col-md-4">
+	  	  <b>Turbine 3</b>
+<div id="v3chart"></div>
+</div>
+</div>	
+	
+	</div>
+	</div>
+	</div>
+	</div>
+	
+	
+		<div class="row">
+		  <div class="col-md-12">
+	<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Temperature Guage Readings</h3>
+  </div>
+  <div class="panel-body" style="text-align:center">
+	
+	<div class="row" style="text-align:center;" id="tguages">
+	  <div class="col-md-4">
+	  <b>Turbine 1</b>
+<div id="t1chart"></div>
+</div>
+	  <div class="col-md-4">
+	  	  <b>Turbine 2</b>
+<div id="t2chart"></div>
+</div>
+	  <div class="col-md-4">
+	  	  <b>Turbine 3</b>
+<div id="t3chart"></div>
+</div>
+</div>	
+	
+	
+	</div>
+	</div>
+	</div>
+	</div>
+	
+	
 	<div class="row">
 		  <div class="col-md-12">
 	<div class="panel panel-default">
@@ -50,14 +109,14 @@
     <h3 class="panel-title">Email Notifications</h3>
   </div>
   <div class="panel-body" style="text-align:center">
-	<form method="POST" action="https://www.formedresponse.com/post/596f4ba2f3184" class="form-inline">
+	<form method="POST" action="http://www.formedresponse.com/post/596f4ba2f3184" class="form-inline">
   <div class="form-group">
     <label for="exampleInputName2">Name</label>
-    <input type="text" name="name" class="form-control" id="exampleInputName2" placeholder="Jane Doe">
+    <input type="text" name="name" class="form-control" id="exampleInputName2" placeholder="Jane Doe" required>
   </div>
   <div class="form-group">
     <label for="exampleInputEmail2">Email</label>
-    <input type="email" class="form-control" name="email" id="exampleInputEmail2" placeholder="jane.doe@example.com">
+    <input type="email" class="form-control" name="email" id="exampleInputEmail2" placeholder="jane.doe@example.com" required>
   </div>
   <br><br>
   <div class="form-group">
@@ -73,7 +132,6 @@
   <select name="above-below" class="form-control" id="sel1">
     <option value="above">above</option>
     <option value="below">below</option>
-	<option value="equal">equal to</option>
   </select>
 </div>
   <div class="form-group hideme">
@@ -98,7 +156,7 @@
 	</div></div>
 
 
-
+	
 	  <div class="row">
 	  <div class="col-md-6">
 	  <div id="chartT"></div>
@@ -112,17 +170,247 @@
     </div><!-- /.container -->
 
 		<script type="text/javascript">
+var chartv1 = c3.generate({
+    bindto: '#v1chart',
+    data: {
+        columns: [
+            ['Voltage', 0]
+        ],
+        type: 'gauge',
+        onclick: function (d, i) { console.log("onclick", d, i); },
+        onmouseover: function (d, i) { console.log("onmouseover", d, i); },
+        onmouseout: function (d, i) { console.log("onmouseout", d, i); }
+    },
+    gauge: {
+        label: {
+            format: function(value, ratio) {
+                return value;
+           },
+            show: true // to turn off the min/max labels.
+        },
+    min: 0, // 0 is default, //can handle negative min e.g. vacuum / voltage / current flow / rate of change
+    max: 5, // 100 is default
+    units: ' volts',
+//    width: 39 // for adjusting arc thickness
+    },
+    color: {
+        pattern: ['#FF0000', '#F97600', '#F6C600', '#60B044'], // the three color levels for the percentage values.
+        threshold: {
+//            unit: 'value', // percentage is default
+//            max: 200, // 100 is default
+            values: [0, 1, 3, 5]
+        }
+    },
+    size: {
+        height: 180
+    }
+});
 
 
 
+var chartv2 = c3.generate({
+    bindto: '#v2chart',
+    data: {
+        columns: [
+            ['Voltage', 0]
+        ],
+        type: 'gauge',
+        onclick: function (d, i) { console.log("onclick", d, i); },
+        onmouseover: function (d, i) { console.log("onmouseover", d, i); },
+        onmouseout: function (d, i) { console.log("onmouseout", d, i); }
+    },
+    gauge: {
+        label: {
+            format: function(value, ratio) {
+                return value;
+           },
+            show: true // to turn off the min/max labels.
+        },
+    min: 0, // 0 is default, //can handle negative min e.g. vacuum / voltage / current flow / rate of change
+    max: 5, // 100 is default
+    units: ' volts',
+//    width: 39 // for adjusting arc thickness
+    },
+    color: {
+        pattern: ['#FF0000', '#F97600', '#F6C600', '#60B044'], // the three color levels for the percentage values.
+        threshold: {
+//            unit: 'value', // percentage is default
+//            max: 200, // 100 is default
+            values: [0, 1, 3, 5]
+        }
+    },
+    size: {
+        height: 180
+    }
+});
+
+
+var chartv3 = c3.generate({
+    bindto: '#v3chart',
+    data: {
+        columns: [
+            ['Voltage', 0]
+        ],
+        type: 'gauge',
+        onclick: function (d, i) { console.log("onclick", d, i); },
+        onmouseover: function (d, i) { console.log("onmouseover", d, i); },
+        onmouseout: function (d, i) { console.log("onmouseout", d, i); }
+    },
+    gauge: {
+        label: {
+            format: function(value, ratio) {
+                return value;
+           },
+            show: true // to turn off the min/max labels.
+        },
+    min: 0, // 0 is default, //can handle negative min e.g. vacuum / voltage / current flow / rate of change
+    max: 5, // 100 is default
+    units: ' volts',
+//    width: 39 // for adjusting arc thickness
+    },
+    color: {
+        pattern: ['#FF0000', '#F97600', '#F6C600', '#60B044'], // the three color levels for the percentage values.
+        threshold: {
+//            unit: 'value', // percentage is default
+//            max: 200, // 100 is default
+            values: [0, 1, 3, 5]
+        }
+    },
+    size: {
+        height: 180
+    }
+});
+		
+		
+		
+		
+var chartt1 = c3.generate({
+    bindto: '#t1chart',
+    data: {
+        columns: [
+            ['Temperature', 0]
+        ],
+        type: 'gauge',
+        onclick: function (d, i) { console.log("onclick", d, i); },
+        onmouseover: function (d, i) { console.log("onmouseover", d, i); },
+        onmouseout: function (d, i) { console.log("onmouseout", d, i); }
+    },
+    gauge: {
+        label: {
+            format: function(value, ratio) {
+                return value;
+           },
+            show: true // to turn off the min/max labels.
+        },
+    min: 0, // 0 is default, //can handle negative min e.g. vacuum / voltage / current flow / rate of change
+    max: 100, // 100 is default
+    units: ' degrees',
+//    width: 39 // for adjusting arc thickness
+    },
+	
+    color: {
+        pattern: ['#FF0000', '#F97600', '#60B044', '#F97600'], // the three color levels for the percentage values.
+        threshold: {
+//            unit: 'value', // percentage is default
+//            max: 200, // 100 is default
+            values: [0, 60, 80, 100]
+        }
+    },
+    size: {
+        height: 180
+    }
+});		
+		
+		
+		
+		
+		
+var chartt2 = c3.generate({
+    bindto: '#t2chart',
+    data: {
+        columns: [
+            ['Temperature', 0]
+        ],
+        type: 'gauge',
+        onclick: function (d, i) { console.log("onclick", d, i); },
+        onmouseover: function (d, i) { console.log("onmouseover", d, i); },
+        onmouseout: function (d, i) { console.log("onmouseout", d, i); }
+    },
+    gauge: {
+        label: {
+            format: function(value, ratio) {
+                return value;
+           },
+            show: true // to turn off the min/max labels.
+        },
+    min: 0, // 0 is default, //can handle negative min e.g. vacuum / voltage / current flow / rate of change
+    max: 100, // 100 is default
+    units: ' degrees',
+//    width: 39 // for adjusting arc thickness
+    },
+	
+    color: {
+        pattern: ['#FF0000', '#F97600', '#60B044', '#F97600'], // the three color levels for the percentage values.
+        threshold: {
+//            unit: 'value', // percentage is default
+//            max: 200, // 100 is default
+            values: [0, 60, 80, 100]
+        }
+    },
+    size: {
+        height: 180
+    }
+});		
+			
+		
+		
+var chartt3 = c3.generate({
+    bindto: '#t3chart',
+    data: {
+        columns: [
+            ['Temperature', 0]
+        ],
+        type: 'gauge',
+        onclick: function (d, i) { console.log("onclick", d, i); },
+        onmouseover: function (d, i) { console.log("onmouseover", d, i); },
+        onmouseout: function (d, i) { console.log("onmouseout", d, i); }
+    },
+    gauge: {
+        label: {
+            format: function(value, ratio) {
+                return value;
+           },
+            show: true // to turn off the min/max labels.
+        },
+    min: 0, // 0 is default, //can handle negative min e.g. vacuum / voltage / current flow / rate of change
+    max: 100, // 100 is default
+    units: ' degrees',
+//    width: 39 // for adjusting arc thickness
+    },
+	
+    color: {
+        pattern: ['#FF0000', '#F97600', '#60B044', '#F97600'], // the three color levels for the percentage values.
+        threshold: {
+//            unit: 'value', // percentage is default
+//            max: 200, // 100 is default
+            values: [0, 60, 80, 100]
+        }
+    },
+    size: {
+        height: 180
+    }
+});		
+			
+		
 		function load(){
-//alert('load');
+		
+		//alert('load');
 
 $.getJSON( "https://www.zachshuster.com/ge/wind.php", function( json ) {
   	this.data = json;
-
-
-
+	
+	
+	
 	template = Hogan.compile($('#table').html());
 
 /*------Configuration-----*/
@@ -133,16 +421,54 @@ $.getJSON( "https://www.zachshuster.com/ge/wind.php", function( json ) {
 
 /*------End Script------*/
 	$('#form').html(template.render(this));
+	
+	console.log(this.data);
+	
+	    chartv1.load({
+        columns: [['Voltage', Math.abs(this.data.turbines[0].voltage)]]
+    });
+	
+		    chartv2.load({
+        columns: [['Voltage', Math.abs(this.data.turbines[1].voltage)]]
+    });
+	
+		    chartv3.load({
+        columns: [['Voltage', Math.abs(this.data.turbines[2].voltage)]]
+    });
+	
+		    chartt1.load({
+        columns: [['Temperature', Math.abs(this.data.turbines[0].temp)]]
+    });
+	
+			    chartt2.load({
+        columns: [['Temperature', Math.abs(this.data.turbines[1].temp)]]
+    });
+	
+			    chartt3.load({
+        columns: [['Temperature', Math.abs(this.data.turbines[2].temp)]]
+    });
+	
  });
-
+ 
+ 
+ 
 setTimeout(load, 5000);
 
 }
 $( document ).ready(function() {
 	load();
+	
+$( "#tbutton" ).click(function() {
+  $( "#vguages" ).hide();
+  $( "#tguages" ).show();
+});
 
-
-var chart = c3.generate({
+$( "#vbutton" ).click(function() {
+  $( "#tguages" ).hide();
+  $( "#vguages" ).show();
+});
+	
+var chart1 = c3.generate({
     bindto: '#chartT',
     data: {
         x: 'x',
@@ -170,7 +496,7 @@ var chart = c3.generate({
 
 
 
-var chart = c3.generate({
+var chart2 = c3.generate({
     bindto: '#chartV',
     data: {
         x: 'x',
@@ -198,6 +524,12 @@ var chart = c3.generate({
 });
 
 
+
+
+
+
+
+
 $("#sbutton").click(function(){
     var txt = $("input").val();
     $.post("demo_ajax_gethint.asp", {suggest: txt}, function(result){
@@ -219,7 +551,7 @@ var val = $( "#sel2" ).val();
 
 });
 		</script>
-
+ 
  </body>
 
 
@@ -227,7 +559,7 @@ var val = $( "#sel2" ).val();
 <!-- Template to be used to draw the table -->
   <script id="table" type="text/html">
 <br><br>
-
+  
   {{#data.alerts.length}}
 <div class="panel panel-danger">
   <!-- Default panel contents -->
@@ -241,14 +573,14 @@ var val = $( "#sel2" ).val();
 
 
   </div>
-</div>
+</div>   
     {{/data.alerts.length}}
 
 
 
 <div class="row">
   <div class="col-md-6">
-
+  
 <div class="panel panel-info">
   <!-- Default panel contents -->
   <div class="panel-heading">Heartbeats</div>
@@ -261,8 +593,8 @@ var val = $( "#sel2" ).val();
 
 
   </div>
-</div>
-
+</div>  
+  
   </div>
     <div class="col-md-6">
 
