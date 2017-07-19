@@ -39,13 +39,17 @@
 
   </head>
   <body>
-  
+  <div class="row">
+  <div style="max-width:158px;margin-left:auto;margin-right:auto;">
+  <img src="https://i.imgur.com/reNXZIV.jpg" height="100px">
+  </div>
+  </div>
     <div class="container-fluid">
 	
       <div id="form"></div>
 	<div class="row">
 		  <div class="col-md-12">
-	<div class="panel panel-default">
+	<div class="panel panel-info">
   <div class="panel-heading">
     <h3 class="panel-title">Voltage Guage Readings</h3>
   </div>
@@ -74,7 +78,7 @@
 	
 		<div class="row">
 		  <div class="col-md-12">
-	<div class="panel panel-default">
+	<div class="panel panel-info">
   <div class="panel-heading">
     <h3 class="panel-title">Temperature Guage Readings</h3>
   </div>
@@ -104,7 +108,7 @@
 	
 	<div class="row">
 		  <div class="col-md-12">
-	<div class="panel panel-default">
+	<div class="panel panel-info">
   <div class="panel-heading">
     <h3 class="panel-title">Email Notifications</h3>
   </div>
@@ -158,15 +162,29 @@
 
 	
 	  <div class="row">
+	  	  <div class="col-md-12">
+
+	  <div class="panel panel-danger">
+  <!-- Default panel contents -->
+  <div class="panel-heading">Dummy Data Historical Graphs</div>
+  <div class="panel-body">
+	  
 	  <div class="col-md-6">
 	  <div id="chartT"></div>
 	  </div>
 	  <div class="col-md-6">
 	  <div id="chartV"></div>
 	  </div>
-
+</div>
+</div>
 	  </div>
-
+</div>
+	  
+	  
+	  
+	  
+	  
+	  
     </div><!-- /.container -->
 
 		<script type="text/javascript">
@@ -198,7 +216,7 @@ var chartv1 = c3.generate({
         threshold: {
 //            unit: 'value', // percentage is default
 //            max: 200, // 100 is default
-            values: [0, 1, 3, 5]
+            values: [0, 0.5, 1, 5]
         }
     },
     size: {
@@ -236,7 +254,7 @@ var chartv2 = c3.generate({
         threshold: {
 //            unit: 'value', // percentage is default
 //            max: 200, // 100 is default
-            values: [0, 1, 3, 5]
+            values: [0, 0.5, 1, 5]
         }
     },
     size: {
@@ -273,7 +291,7 @@ var chartv3 = c3.generate({
         threshold: {
 //            unit: 'value', // percentage is default
 //            max: 200, // 100 is default
-            values: [0, 1, 3, 5]
+            values: [0, 0.5, 1, 5]
         }
     },
     size: {
@@ -506,7 +524,7 @@ var chart2 = c3.generate({
 //            ['x', '20130101', '20130102', '20130103', '20130104', '20130105', '20130106'],
             ['Turbine 1', 3, 2, 1, 4, 1, 2],
 			            ['Turbine 2', 3, 4, 5, 6, 1, 2],
-            ['Turbine 3', 1.3, 3.3, 2.2, 1.5]
+            ['Turbine 3', 1.3, 3.3, 2.2, 1.5, 3, 5]
         ]
     },
 
@@ -558,7 +576,7 @@ var val = $( "#sel2" ).val();
 
 <!-- Template to be used to draw the table -->
   <script id="table" type="text/html">
-<br><br>
+
   
   {{#data.alerts.length}}
 <div class="panel panel-danger">
