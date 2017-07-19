@@ -443,7 +443,7 @@ $.getJSON( "https://www.zachshuster.com/ge/wind.php", function( json ) {
 /*------End Script------*/
 	$('#form').html(template.render(this));
 	
-	console.log(this.data);
+//	console.log(this.data);
 	
 	    chartv1.load({
         columns: [['Voltage', Math.abs(this.data.turbines[0].voltage)]]
