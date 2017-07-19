@@ -1,12 +1,15 @@
 #Turbine Farm server application
 #Use https://turbine-farm.run.aws-usw02-pr.ice.predix.io/api/turbines/:turbine_id/sensors/:sensor_id
-import requests, json, emailalerts, atexit
+import requests, json, emailalerts, atexit, logging
 from flask import Flask, url_for, redirect
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.interval import IntervalTrigger
 
 #Create the application instance
 app = Flask(__name__)
+
+#Need loggin for background scheduler
+logging.basicConfig()
 
 #Return index route
 @app.route("/")
@@ -74,7 +77,14 @@ def getTurbineData(id):
 
 #Scheduling background data monitor
 def check_data():
-    print "data"
+    for i in range(1, 4):
+    	data = getTurbineData(i)
+
+    	if data['status'] == "OFFLINE":
+    		emailalerts.send_email(4, data['id'], "jaredad7.jd@gmail.com")
+    		print "Sent an alert!"
+    	else:
+    		print "Turbine " + str(data['id'] + " is ONLINE!")
 
 scheduler = BackgroundScheduler()
 scheduler.start()

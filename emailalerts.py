@@ -10,6 +10,8 @@ def send_email(flag, turbine_id, recipient):
 		msg = "ALERT - THE TURBINE:"+str(turbine_id)+"OPERATING IN AN ENVIROMENT RATED TOO COLD FOR CONTINOUS OPERATION!\n"
 	elif flag == 3:
 		msg = "ALERT - THE TURBINE:"+str(turbine_id)+"OPERATING IN AN ENVIROMENT RATED TOO HOT FOR CONTINOUS OPERATION!\n"
+	elif flag == 4:
+		msg = "ALERT - THE TURBINE:"+str(turbine_id)+"IS OFFLINE!\n"
 
 	server.sendmail("jareddummyacct@gmail.com", recipient, msg)
 	server.quit()
